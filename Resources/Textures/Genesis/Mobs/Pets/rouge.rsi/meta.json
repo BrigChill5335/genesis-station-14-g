@@ -1,0 +1,130 @@
+{
+  "version": 1,
+<<<<<<<< HEAD:Resources/Textures/_Goobstation/Mobs/Animals/syndiroach.rsi/meta.json
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprites regretfully handcrafted by BeeRobyn on Discord https://github.com/BeeRobynn",
+========
+>>>>>>>> origin/imported-upstream:Resources/Textures/Genesis/Mobs/Pets/rouge.rsi/meta.json
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/ss220-space/Paradise/blob/f35ac8ab04285f266ab379b05b317f2adb004fca/icons/mob/pets.dmi",
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+<<<<<<<< HEAD:Resources/Textures/_Goobstation/Mobs/Animals/syndiroach.rsi/meta.json
+      "name": "mothroach",
+      "directions": 4
+    },
+    {
+      "name": "mothroach-moving",
+========
+      "name": "snake",
+>>>>>>>> origin/imported-upstream:Resources/Textures/Genesis/Mobs/Pets/rouge.rsi/meta.json
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.2,
+<<<<<<<< HEAD:Resources/Textures/_Goobstation/Mobs/Animals/syndiroach.rsi/meta.json
+          0.2
+        ],
+        [
+========
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+>>>>>>>> origin/imported-upstream:Resources/Textures/Genesis/Mobs/Pets/rouge.rsi/meta.json
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+<<<<<<<< HEAD:Resources/Textures/_Goobstation/Mobs/Animals/syndiroach.rsi/meta.json
+========
+          0.2,
+>>>>>>>> origin/imported-upstream:Resources/Textures/Genesis/Mobs/Pets/rouge.rsi/meta.json
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+<<<<<<<< HEAD:Resources/Textures/_Goobstation/Mobs/Animals/syndiroach.rsi/meta.json
+========
+          0.2,
+>>>>>>>> origin/imported-upstream:Resources/Textures/Genesis/Mobs/Pets/rouge.rsi/meta.json
+          0.2
+        ]
+      ]
+    },
+    {
+<<<<<<<< HEAD:Resources/Textures/_Goobstation/Mobs/Animals/syndiroach.rsi/meta.json
+      "name": "mothroach_lazy",
+      "directions": 4
+    },
+    {
+      "name": "mothroach_sleep",
+      "directions": 4
+    },
+    {
+      "name": "mothroach_dead",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "0-equipped-HELMET",
+      "directions": 4
+========
+      "name": "snake-moving",
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+	},
+    {
+      "name": "snake-critical"
+    },
+    {
+      "name": "dead"
+>>>>>>>> origin/imported-upstream:Resources/Textures/Genesis/Mobs/Pets/rouge.rsi/meta.json
+    }
+  ]
+}
