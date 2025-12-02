@@ -57,6 +57,7 @@ public sealed partial class TTSSystem : EntitySystem
 
         _sawmill = Logger.GetSawmill("tts");
         _cfg.OnValueChanged(CCCVars.TTSVolume, OnTtsVolumeChanged, true);
+        _cfg.OnValueChanged(CCCVars.AnnouncementsSound, OnAnnouncementsVolumeChanged, true);
         SubscribeNetworkEvent<PlayTTSEvent>(OnPlayTTS);
         SubscribeNetworkEvent<TTSAnnouncedEvent>(OnAnnounced);
     }
@@ -65,6 +66,7 @@ public sealed partial class TTSSystem : EntitySystem
     {
         base.Shutdown();
         _cfg.UnsubValueChanged(CCCVars.TTSVolume, OnTtsVolumeChanged);
+        _cfg.UnsubValueChanged(CCCVars.AnnouncementsSound, OnAnnouncementsVolumeChanged);
     }
 
     public void RequestPreviewTTS(string voiceId)
@@ -114,6 +116,7 @@ public sealed partial class TTSSystem : EntitySystem
             audio = _audio.PlayGlobal(audioResource.AudioStream, soundSpecifier, audioParams);
         }
 
+        // Edits TimedDespawn time property for correctly pitch appling
         if (audio.HasValue
             && ev.Pitch.HasValue
             && ev.Pitch.Value != 1

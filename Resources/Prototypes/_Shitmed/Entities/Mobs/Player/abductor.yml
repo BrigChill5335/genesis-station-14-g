@@ -41,6 +41,20 @@
       - CanPilot
       - FootstepSound
       - DoorBumpOpener
+  # Corvax-Goob-GreySpecies-start
+  - type: PressureImmunity
+  - type: SpecialHighTempImmunity
+  - type: SpecialLowTempImmunity
+  - type: Flammable
+    damage:
+      types:
+        Heat: 0.5
+  - type: CollectiveMind
+    defaultChannel: AbductormindAntag
+    channels:
+    - AbductormindAntag
+    - Abductormind
+  # Corvax-Goob-GreySpecies-end
 
 - type: entity
   name: lone abductor
@@ -111,8 +125,6 @@
     - !type:DepartmentTimeRequirement
       department: Security
       time: 10800 #3 hours
-    - !type:GhostTimeRequirement # CorvaxGoob-GhostTimeRequirement
-      time: 1500 #25 mins
   - type: RandomMetadata
     nameSegments:
       - AbductorAgentPrefix
@@ -211,8 +223,6 @@
     - !type:DepartmentTimeRequirement
       department: Security
       time: 7200 #2 hours
-    - !type:GhostTimeRequirement # CorvaxGoob-GhostTimeRequirement
-      time: 1500 #25 mins
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
@@ -252,8 +262,6 @@
     - !type:DepartmentTimeRequirement
       department: Security
       time: 10800 #3 hours
-    - !type:GhostTimeRequirement # CorvaxGoob-GhostTimeRequirement
-      time: 1500 #25 mins
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
