@@ -1,0 +1,12 @@
+# Genesis
+# Head
+- type: loadout
+  id: PilotHead
+  equipment:
+    head: ClothingHeadHelmetPilot
+
+# Mask
+- type: loadout
+  id: PilotMask
+  equipment:
+    mask: ClothingMaskGasPilot

@@ -1,0 +1,25 @@
+- type: loadoutGroup
+  id: Inventory
+  name: loadout-group-inventory
+  minLimit: 0
+  maxLimit: 5
+  loadouts: []
+
+# Pilot
+- type: loadoutGroup
+  id: PilotHead
+  name: loadout-group-head
+  minLimit: 0
+  loadouts:
+  - PilotHead
+  - SecurityHelmet
+  - SecurityBeret
+  - SecurityHat
+
+- type: loadoutGroup
+  id: PilotMask
+  name: loadout-group-mask
+  minLimit: 0
+  loadouts:
+  - PilotMask
+  - SecurityMask

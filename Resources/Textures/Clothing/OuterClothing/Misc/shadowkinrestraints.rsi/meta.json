@@ -1,7 +1,11 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
+<<<<<<< HEAD:Resources/Textures/Clothing/OuterClothing/Misc/shadowkinrestraints.rsi/meta.json
     "copyright": "JustAnOrange",
+=======
+    "copyright": "Icon taken from ParadiseSS13 at commit https://github.com/ParadiseSS13/Paradise/commit/391f296ed9b06d9bd13daca5b51c68740e714f1f; In hand sprites done by Unkn0wnGh0st333 on github, inhand-kangaroo by brainfood (github)",
+>>>>>>> origin/imported-upstream:Resources/Textures/Clothing/Hands/Gloves/KnuckleDusters/syndicateknuckleduster.rsi/meta.json
     "size": {
         "x": 32,
         "y": 32
@@ -13,6 +17,10 @@
         },
         {
             "name": "icon"
+        },
+        {
+            "name": "equipped-HAND-kangaroo",
+            "directions": 4
         },
         {
             "name": "inhand-left",

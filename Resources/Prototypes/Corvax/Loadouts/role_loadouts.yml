@@ -1,0 +1,26 @@
+- type: roleLoadout
+  id: JobIAA
+  groups:
+  - LawyerNeck
+  - LawyerJumpsuit
+  - CommonBackpack
+  - Survival
+  - Trinkets
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobPilot
+  groups:
+  - PilotHead
+  - PilotMask
+  - SecurityJumpsuit
+  - SecurityBackpack
+  - SecurityOuterClothing
+  - SecurityGloves
+  - SecurityShoes
+  - SecurityBelt
+  - SecurityPocket
+  - SecurityPocket2
+  - Survival
+  - Trinkets
+  - GroupSpeciesBreathTool

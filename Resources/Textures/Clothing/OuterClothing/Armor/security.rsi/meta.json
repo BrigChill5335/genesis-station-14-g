@@ -1,12 +1,12 @@
 {
-    "version": 1,
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Made by DieselMohawk for use in SS14. equipped-OUTERCLOTHING-dog modified from equipped-OUTERCLOTHING by Sparlight (GitHub). Resomi sprites by Salem taken from starlight",
-    "size": {
-        "x": 32,
-        "y": 32
-    },
-    "states": [
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Debiloid3000",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
         {
             "name": "icon"
         },
@@ -20,10 +20,6 @@
         },
         {
             "name": "equipped-OUTERCLOTHING-dog",
-            "directions": 4
-        },
-        {
-            "name": "equipped-OUTERCLOTHING-resomi",
             "directions": 4
         },
         {
