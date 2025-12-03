@@ -70,23 +70,6 @@
 
 - type: entity
   parent: BasePDA
-  id: RoboticistPDA
-  name: roboticist PDA
-  description: It's covered in something sticky.
-  components:
-  - type: Pda
-    id: RoboticistIDCard
-  - type: PdaBorderColor
-    borderColor: "#d7d7d0"
-    accentVColor: "#8900c9"
-  - type: Icon
-    state: pda-roboticist
-  - type: HealthAnalyzer
-    scanningEndSound:
-      path: "/Audio/Items/Medical/healthscanner.ogg"
-
-- type: entity
-  parent: BasePDA
   id: SeniorSalvagePDA
   name: senior salvage PDA
   description: Just a PDA.
