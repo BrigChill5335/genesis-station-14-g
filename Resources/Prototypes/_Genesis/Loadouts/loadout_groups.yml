@@ -253,44 +253,6 @@
   - JediNTEnergySword2
 
 # Security
-# Brigmedic
-- type: loadoutGroup
-  id: BrigmedicHead
-  name: loadout-group-head
-  minLimit: 0
-  loadouts:
-  - BrigmedicHead
-
-- type: loadoutGroup
-  id: BrigmedicMask
-  name: loadout-group-mask
-  minLimit: 0
-  loadouts:
-  - SterileMask
-  - SecurityMask
-
-- type: loadoutGroup
-  id: BrigmedicJumpsuit
-  name: loadout-group-jumpsuit
-  loadouts:
-  - BrigmedicJumpsuit
-  - BrigmedicJumpskirt
-
-- type: loadoutGroup
-  id: BrigmedicBackpack
-  name: loadout-group-backpack
-  loadouts:
-  - BrigmedicBackpack
-  - BrigmedicSatchel
-  - BrigmedicDuffel
-
-- type: loadoutGroup
-  id: BrigmedicOuterClothing
-  name: loadout-group-outerclothing
-  minLimit: 0
-  loadouts:
-  - BrigmedicOuterClothing
-
 - type: loadoutGroup
   id: HeadOfSecurityBackpack
   name: loadout-group-backpack
@@ -494,14 +456,14 @@
 
 # Science
 - type: loadoutGroup
-  id: RoboticistJumpsuit
+  id: RoboticistGenesisJumpsuit
   name: loadout-group-jumpsuit
   loadouts:
   - RoboticistJumpsuit
   - RoboticistJumpskirt
 
 - type: loadoutGroup
-  id: RoboticistOuterClothing
+  id: RoboticistGenesisOuterClothing
   name: loadout-group-outerclothing
   minLimit: 0
   loadouts:
@@ -509,7 +471,7 @@
   - RoboticistWintercoat
 
 - type: loadoutGroup
-  id: RoboticistHead
+  id: RoboticistGenesisHead
   name: loadout-group-head
   minLimit: 0
   loadouts:

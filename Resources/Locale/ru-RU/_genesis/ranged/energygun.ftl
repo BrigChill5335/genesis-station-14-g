@@ -1,5 +1,3 @@
-energygun-examine-fire-mode = Режим огня установлен на {$mode}
-
 ent-WeaponEnergyGun = энергетическая пушка
     .desc = Базовая гибридная энергетическая с двумя режимами работы: обезоруживание и летал.
 
@@ -14,7 +12,6 @@ ent-WeaponGunLaserCarbineAutomatic = лазерный карабин ИК-60
 
 ent-WeaponIONRifle = ионная пушка
     .desc = Продвинутое оружие, поставляемое отделам Службы Безопасности для борьбы с организованной преступностью.
-
 
 energy-gun-lethal = летал
 energy-gun-disable = обезоруживание

@@ -1,8 +1,8 @@
 ﻿- type: job
-  id: Roboticist
+  id: RoboticistGenesis
   name: job-name-roboticist
   description: job-description-roboticist
-  playTimeTracker: JobRoboticist
+  playTimeTracker: JobRoboticistGenesis
   requirements:
     - !type:DepartmentTimeRequirement
       department: Science
@@ -10,7 +10,7 @@
     - !type:DepartmentTimeRequirement
       department: Engineering
       time: 14400 # 4 hrs
-  startingGear: RoboticistGear
+  startingGear: RoboticistGenesisGear
   icon: JobIconRoboticist
   supervisors: job-supervisors-rd
   access:
@@ -19,14 +19,14 @@
     - Engineering
 
 - type: startingGear
-  id: RoboticistGear
+  id: RoboticistGenesisGear
   equipment:
     id: RoboticistPDA
     belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetRobotics
 
 - type: chameleonOutfit
-  id: RoboticistChameleonOutfit
+  id: RoboticistGenesisChameleonOutfit
   job: Roboticist
   equipment:
     head: ClothingHeadBandSkull

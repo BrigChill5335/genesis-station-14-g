@@ -602,12 +602,12 @@
   - type: Tag
     tags:
     - WhitelistChameleon
-  - type: HideLayerClothing
-    slots:
-    - Hair
-    - Snout
-    - HeadTop
-    - HeadSide
+#  - type: HideLayerClothing
+#    slots:
+#    - Hair
+#    - Snout
+#    - HeadTop
+#    - HeadSide
     hideOnToggle: true
   - type: Armor
     coverage:
@@ -662,10 +662,10 @@
   - type: Tag
     tags:
     - WhitelistChameleon
-  - type: HideLayerClothing
-    slots:
-    - Hair
-    - Snout
+#  - type: HideLayerClothing
+#    slots:
+#    - Hair
+#    - Snout
     hideOnToggle: true
   - type: FlashImmunity
   - type: EyeProtection
@@ -691,11 +691,11 @@
     sprite: Clothing/Mask/squadron.rsi
   - type: Clothing
     sprite: Clothing/Mask/squadron.rsi
-  - type: HideLayerClothing
-    slots:
-    - Hair
-    - HeadTop
-    - HeadSide
+#  - type: HideLayerClothing
+#    slots:
+#    - Hair
+#    - HeadTop
+#    - HeadSide
   - type: Armor
     coverage:
     - Head

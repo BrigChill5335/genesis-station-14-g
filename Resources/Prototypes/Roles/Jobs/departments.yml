@@ -107,7 +107,9 @@
   roles:
   - CargoTechnician
   - Quartermaster
+  - SeniorSalvage # Genesis-Station
   - SalvageSpecialist
+  - Miner # Genesis-Station
 
 - type: department
   id: Civilian
@@ -116,6 +118,7 @@
   color: "#9FED58"
   weight: -10
   roles:
+  - SeniorService # Genesis-Station
   - Bartender
   - Botanist
   - Boxer
@@ -134,6 +137,7 @@
   - Zookeeper
   - ServiceWorker
   - PartyMaker # event-restricted, Goobstation
+  - Prisoner # Genesis-Station
 
 - type: department
   id: CentralCommand
@@ -151,7 +155,18 @@
   - ERTEngineer
   - DeathSquad
   - HecuOperative
-  - BlueshieldOfficer # Goobstation - Start
+  - BlueShield # Genesis
+# WIP CentCom
+#  - HeadOfStaffCentCom # Genesis-Station
+#  - CentComOfficial # Genesis-Station
+#  - CentComOperator # Genesis-Station
+#  - HeadOfSecurityCentCom # Genesis-Station
+#  - CentralCommandSecurityOfficer # Genesis-Station
+#  - CentralCommandMedicalDoctor # Genesis-Station
+#  - CentralCommandEngineer # Genesis-Station
+#  - CentralCommandAssistant # Genesis-Station
+#  - CentralCommandCargoTechnician # Genesis-Station
+#  - BlueshieldOfficer # Goobstation - Start sorry goobs no today for your blueshield, about cc idk
   - NanotrasenRepresentative
   - NanotrasenCareerTrainer
   - NavyOfficer
@@ -170,13 +185,14 @@
   color: "#334E6D"
   roles:
   - Captain
+  - Magistrat # Genesis-Station
   - ChiefEngineer
   - ChiefMedicalOfficer
   - HeadOfPersonnel
   - HeadOfSecurity
   - ResearchDirector
   - Quartermaster
-  - BlueshieldOfficer # Goobstation
+#  - BlueshieldOfficer # Goobstation
   - NanotrasenRepresentative # Goobstation
   - NanotrasenCareerTrainer # Goobstation
   - CentralCommandOfficial
@@ -201,6 +217,7 @@
   roles:
   - AtmosphericTechnician
   - ChiefEngineer
+  - SeniorEngineer # Genesis-Edit
   - StationEngineer
   - TechnicalAssistant
 
@@ -212,6 +229,7 @@
   roles:
   - Chemist
   - ChiefMedicalOfficer
+  - SeniorPhysician # Genesis-Edit
   - MedicalDoctor
   - MedicalIntern
   - Psychologist
@@ -232,6 +250,7 @@
   - Warden
   - Brigmedic # Goob
   - Pilot # Corvax-Pilot
+  - SeniorOfficer # Genesis-Edit
   - WardenHelper # CorvaxGoob-WardenHelper
   - SecurityClown # event-restricted, Goob
 
@@ -266,4 +285,5 @@
   - Reporter
   - Zookeeper
   - Psychologist
+  - Prisoner # Genesis-Station
   primary: false

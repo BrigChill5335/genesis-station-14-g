@@ -32,7 +32,7 @@
   id: JobSeniorResearcher
 
 - type: playTimeTracker
-  id: JobRoboticist
+  id: JobRoboticistGenesis
 
 - type: playTimeTracker
   id: JobSeniorSalvage

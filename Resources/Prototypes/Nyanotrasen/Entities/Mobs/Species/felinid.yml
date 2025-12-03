@@ -18,16 +18,15 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  save: false
   name: Urist McFelinid
   parent: BaseMobHuman
   id: MobFelinidBase
   abstract: true
   components:
   - type: Sprite
-    # scale: 0.8, 0.8 # Goobstation: port EE height/width sliders
+    scale: 0.8, 0.8 # Goobstation: port EE height/width sliders
   - type: ScaleData # Goobstation
-    # scale: 0.8, 0.8 # Goobstation: port EE height/width sliders
+    scale: 0.8, 0.8 # Goobstation: port EE height/width sliders
   - type: HumanoidAppearance
     species: Felinid
   - type: Fixtures
@@ -47,10 +46,10 @@
   - type: Damageable
     damageModifierSet: Felinid
   # Goobstation - Siouxcide, felinids have standard slow on damage numbers
-# - type: SlowOnDamage
-#   speedModifierThresholds:
-#     60: 0.85  # 0.7 is base speed.
-#     80: 0.75  # 0.5 is base speed.
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      60: 0.85  # 0.7 is base speed.
+      80: 0.75  # 0.5 is base speed.
   - type: MeleeWeapon
     soundHit:
       collection: Punch
@@ -59,9 +58,9 @@
       types:
         Slash: 4
         Piercing: 1
-#  - type: DiseaseCarrier
-#    naturalImmunities:
-#    - OwOnavirus
+  - type: DiseaseCarrier
+    naturalImmunities:
+    - OwOnavirus
   - type: Speech
     speechSounds: Alto
   - type: LanguageKnowledge # Einstein Engines - Languages
@@ -78,6 +77,9 @@
   - type: Stamina
     critThreshold: 75 # Goobstation - Siouxcide, felinids take 3 disabler shots to down
     animationThreshold: 40 # Goob edit
+#  - type: PseudoItem  - я видел там короче у типов есть PseudoItem ток я хз как он работает, типо там еще какие то параметры а мне чота лень делать это ес чо, в некст раз. А щас исправления.
+  - type: WoundLicking # ну короче перенос ебать от нас мы нахуй удаляем своих фелинидов и переходим на губы я целую твои губы
+  - type: OwOAccent
   - type: TypingIndicator
     proto: felinid
   - type: PseudoItem
@@ -92,7 +94,6 @@
       Male: MaleFelinid
       Female: FemaleFelinid
       Unsexed: MaleFelinid
-  #- type: OwOAccent this is just like that book by jorjorwell... 1984
   - type: Felinid
   - type: NoShoesSilentFootsteps
   - type: Tag
@@ -102,7 +103,7 @@
     - DoorBumpOpener
     - AnomalyHost
     - FelinidEmotes
-  #- type: FootPrints # WD EDIT
+  #- type: FootPrints # WD EDIT я хуй знает что это ебать так что не трогаю, т.к не видел подобное у других рас(ну вообще я посмотрел онли губовские т.к мне лень чекать основные)
   - type: Consciousness
     cap: 160
     threshold: 80

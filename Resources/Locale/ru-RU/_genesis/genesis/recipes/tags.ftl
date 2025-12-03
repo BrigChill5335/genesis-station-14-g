@@ -34,5 +34,3 @@ construction-graph-tag-chainsword-chain = изношенная цепь с ши�
 construction-graph-tag-chainsword-engine = малый изношенный двигатель
 construction-graph-tag-chainsword-handle = потёртая рукоять
 # Mechs
-construction-graph-tag-durand-armor = броня Дюранда
-construction-graph-tag-gygax-armor = броня Гайгэкса

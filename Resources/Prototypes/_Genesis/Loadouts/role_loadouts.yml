@@ -194,20 +194,6 @@
 
 # Security
 - type: roleLoadout
-  id: JobBrigmedic
-  groups:
-  - GroupTankHarness
-  - BrigmedicHead
-  - BrigmedicMask
-  - BrigmedicJumpsuit
-  - MedicalGloves
-  - BrigmedicBackpack
-  - BrigmedicOuterClothing
-  - SecurityShoes
-  - Trinkets
-  - GroupSpeciesBreathTool
-
-- type: roleLoadout
   id: JobPrisoner
   groups:
   - GroupTankHarness
@@ -311,13 +297,13 @@
 
 # Science
 - type: roleLoadout
-  id: JobRoboticist
+  id: JobRoboticistGenesis
   groups:
   - GroupTankHarness
-  - RoboticistHead
+  - RoboticistGenesisHead
   - ScientistNeck
-  - RoboticistJumpsuit
-  - RoboticistOuterClothing
+  - RoboticistGenesisJumpsuit
+  - RoboticistGenesisOuterClothing
   - ScientistBackpack
   - ScientistShoes
   - Survival
