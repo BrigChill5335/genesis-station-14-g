@@ -77,7 +77,6 @@
   - type: Stamina
     critThreshold: 75 # Goobstation - Siouxcide, felinids take 3 disabler shots to down
     animationThreshold: 40 # Goob edit
-#  - type: PseudoItem  - я видел там короче у типов есть PseudoItem ток я хз как он работает, типо там еще какие то параметры а мне чота лень делать это ес чо, в некст раз. А щас исправления.
   - type: WoundLicking # ну короче перенос ебать от нас мы нахуй удаляем своих фелинидов и переходим на губы я целую твои губы
   - type: OwOAccent
   - type: TypingIndicator
