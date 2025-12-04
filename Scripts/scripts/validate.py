@@ -3,8 +3,8 @@ import re
 import yaml
 from collections import defaultdict
 
-PROTOTYPES_DIR = "Prototypes"
-LOCALE_DIR = "Locale"
+PROTOTYPES_DIR = "Resources/Prototypes"
+LOCALE_DIR = "Resources/Locale"
 
 print("Current working directory:", os.getcwd())
 if not os.path.isdir(PROTOTYPES_DIR):
