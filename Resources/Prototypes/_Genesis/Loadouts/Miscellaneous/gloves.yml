@@ -51,11 +51,6 @@
     gloves: ClothingHandsGlovesColorGreen
 
 - type: loadout
-  id: WhiteGloves
-  equipment:
-    gloves: ClothingHandsGlovesColorWhite
-
-- type: loadout
   id: BlackGloves
   equipment:
     gloves: ClothingHandsGlovesColorBlack
