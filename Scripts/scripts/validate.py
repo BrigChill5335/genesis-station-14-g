@@ -5,50 +5,65 @@ from collections import defaultdict
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 
-# --------- Сканирование всех Prototypes ----------
-
+# --------- Сканируем все прототипные YAML ---------
 prototypes_files = []
 for root, dirs, files in os.walk(REPO_ROOT):
-    for d in dirs:
-        if d.lower() == "prototypes":
-            prototypes_dir = os.path.join(root, d)
-            for prow, _, pfiles in os.walk(prototypes_dir):
-                for pf in pfiles:
-                    if pf.endswith(".yml"):
-                        prototypes_files.append(os.path.join(prow, pf))
+    for file in files:
+        if file.endswith(".yml"):
+            prototypes_files.append(os.path.join(root, file))
 
 all_ids = defaultdict(list)
-used_ids = set()
+used_proto_ids = set()  # ссылки на другие прототипы
+
+yaml_id_key = "id"
 
 for path in prototypes_files:
     with open(path, encoding="utf-8") as f:
         try:
             data = yaml.safe_load(f)
-            if not isinstance(data, dict): continue
-            for item in data.get("prototypes", []):
-                id_ = item.get("id")
-                if id_:
-                    all_ids[id_].append(path)
-            f.seek(0)
-            content = f.read()
-            found_ids = re.findall(r'id:\s*([a-zA-Z0-9_-]+)', content)
-            used_ids.update(found_ids)
+            items = []
+            # Если это словарь с ключом 'prototypes', работаем с его содержимым.
+            if isinstance(data, dict) and "prototypes" in data and isinstance(data["prototypes"], list):
+                items = data["prototypes"]
+            # Если просто список, работаем напрямую.
+            elif isinstance(data, list):
+                items = data
+            # Если это словарь и он сам прототип — оборачиваем в список.
+            elif isinstance(data, dict):
+                items = [data]
+
+            for item in items:
+                if not isinstance(item, dict):
+                    continue
+                # Считываем id (только верхний уровень!)
+                id_value = item.get(yaml_id_key)
+                if id_value:  # учитываем только если id есть
+                    all_ids[id_value].append(path)
+
+                # Находим ссылки на другие id (proto/prototype)
+                # Смотрим в каждый ключ этого объекта
+                for k, v in item.items():
+                    # proto, prototype: string или список
+                    # Обычно ключ называется proto или prototype
+                    # Важно: не ищем дубликаты по этим ссылкам!
+                    if k in ("proto", "prototype") and isinstance(v, str):
+                        used_proto_ids.add(v)
+                    elif k in ("proto", "prototype") and isinstance(v, list):
+                        for vv in v:
+                            if isinstance(vv, str):
+                                used_proto_ids.add(vv)
+            # А ещё ищем "id:" в сыром тексте (например, в parent), но не считаем их как id, а только как ссылки:
+            # Можно добавить отдельную проверку при необходимости!
         except Exception as e:
             print(f"Failed to parse {path}: {e}")
 
-# --------- Сканирование всех Locale ----------
-
+# --------- Сканируем все Locale (по всем языкам) ---------
 locale_ftl_files = []
 for root, dirs, files in os.walk(REPO_ROOT):
-    for d in dirs:
-        if d.lower() == "locale":
-            locale_dir = os.path.join(root, d)
-            for lrow, _, lf in os.walk(locale_dir):
-                for ftlfile in lf:
-                    if ftlfile.endswith(".ftl"):
-                        locale_ftl_files.append(os.path.join(lrow, ftlfile))
+    for file in files:
+        if file.endswith(".ftl"):
+            locale_ftl_files.append(os.path.join(root, file))
 
-# Определяем язык по имени папки сразу под Locale:
 def get_lang(path):
     parts = path.replace("\\", "/").split("/")
     if "Locale" in parts:
@@ -71,27 +86,27 @@ for path in locale_ftl_files:
 
 errors = []
 
-# Дубликаты прототипов
+# 1. Дубликаты прототипов по id (только верхний уровень словаря!)
 for id_, paths in all_ids.items():
     if len(paths) > 1:
         errors.append({
             "type": "duplicate id",
-            "desc": f"Дубликат прототипа '{id_}' встречается в нескольких файлах:",
+            "desc": f"Дубликат прототипа (ID = {id_}), встречается в нескольких файлах:",
             "id": id_,
             "paths": paths
         })
 
-# ID без определения
-for id_ in used_ids:
-    if id_ not in all_ids:
+# 2. Ссылки на несуществующие id (proto/prototype)
+for p_id in used_proto_ids:
+    if p_id not in all_ids:
         errors.append({
-            "type": "no id",
-            "desc": f"ID '{id_}' используется, но не определён ни в одном прототипе:",
-            "id": id_,
+            "type": "missing proto id",
+            "desc": f"ID '{p_id}' указан в proto/prototype, но не найден среди прототипов:",
+            "id": p_id,
             "paths": []
         })
 
-# Дубликаты локалей внутри каждого языка
+# 3. Дубликаты локалей (по языкам)
 for lang, locale_ids in locale_ids_by_lang.items():
     for lid, paths in locale_ids.items():
         if len(paths) > 1:
@@ -102,7 +117,7 @@ for lang, locale_ids in locale_ids_by_lang.items():
                 "paths": paths
             })
 
-# Нет локализации для существующих ID (только по en-US, иначе слишком много)
+# 4. Нет локализации для существующих id (только en-US, чтобы избежать спама)
 main_lang = "en-US" if "en-US" in locale_ids_by_lang else next(iter(locale_ids_by_lang), None)
 if main_lang:
     locale_ids_mainlang = locale_ids_by_lang[main_lang]
@@ -115,13 +130,11 @@ if main_lang:
                 "paths": []
             })
 
-# --------- Финальный красивый вывод ---------
-
+# --------- Красивый финальный вывод ---------
 print("\n====== ИТОГ ВАЛИДАЦИИ ======\n")
 if not errors:
     print("✔️ Всё отлично! Ошибок не найдено.\n")
 else:
-    # Группируем и нумеруем удобно
     grouped = defaultdict(list)
     for err in errors:
         grouped[err['type']].append(err)
@@ -129,13 +142,13 @@ else:
     num = 1
     for err_type, err_list in grouped.items():
         type_title = {
-            "duplicate id": "Дубликат ID прототипа",
-            "no id": "ID используется, но не определён",
-            "duplicate locale": "Дубликат локали внутри языка",
-            "invalid locale": f"Нет локализации для ID (в {main_lang})"
+            "duplicate id": "1. Дубликат ID прототипа",
+            "missing proto id": "2. Не найден целевой proto/prototype ID",
+            "duplicate locale": "3. Дубликат локали внутри языка",
+            "invalid locale": f"4. Нет локализации для ID (в {main_lang})"
         }.get(err_type, err_type)
 
-        print(f"{num}. {type_title}")
+        print(type_title)
         for i, err in enumerate(err_list, 1):
             print(f"   {num}.{i}) {err['desc']}")
             print(f"       ID: {err['id']}")
@@ -143,6 +156,5 @@ else:
                 print(f"          -> {path}")
         print("--------------------------------------------------")
         num += 1
-
-    print("\n❌ Всего проблем: %d\n" % len(errors))
+    print(f"\n❌ Всего проблем: {len(errors)}\n")
     exit(1)
