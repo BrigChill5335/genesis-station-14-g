@@ -3,67 +3,75 @@ import re
 import yaml
 from collections import defaultdict
 
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-PROTOTYPES_DIR = os.path.join(SCRIPT_DIR, '..', '..', 'Resources', 'Prototypes')
-LOCALE_DIR = os.path.join(SCRIPT_DIR, '..', '..', 'Resources', 'Locale')
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 
-def dir_list_or_warn(path):
-    if not os.path.isdir(path):
-        print(f"Warning: No '{path}' directory found!")
-        return []
-    else:
-        print(f"'{path}' folder contents: {os.listdir(path)}")
-        return os.listdir(path)
+# --------- Сканирование всех Prototypes ----------
 
-print("Current working directory:", os.getcwd())
-print("Script DIR:", SCRIPT_DIR)
-print("Prototypes DIR:", PROTOTYPES_DIR)
-print("Locale DIR:", LOCALE_DIR)
+prototypes_files = []
+for root, dirs, files in os.walk(REPO_ROOT):
+    for d in dirs:
+        if d.lower() == "prototypes":
+            prototypes_dir = os.path.join(root, d)
+            for prow, _, pfiles in os.walk(prototypes_dir):
+                for pf in pfiles:
+                    if pf.endswith(".yml"):
+                        prototypes_files.append(os.path.join(prow, pf))
 
-# 1. Проверка прототипов
 all_ids = defaultdict(list)
 used_ids = set()
-for root, _, files in os.walk(PROTOTYPES_DIR):
-    for file in files:
-        if file.endswith(".yml"):
-            path = os.path.join(root, file)
-            with open(path, encoding="utf-8") as f:
-                try:
-                    data = yaml.safe_load(f)
-                    if not isinstance(data, dict):
-                        continue
-                    for item in data.get("prototypes", []):
-                        id_ = item.get("id")
-                        if id_:
-                            all_ids[id_].append(path)
-                    f.seek(0)
-                    content = f.read()
-                    found_ids = re.findall(r'id:\s*([a-zA-Z0-9_-]+)', content)
-                    used_ids.update(found_ids)
-                except Exception as e:
-                    print(f"Failed to parse {path}: {e}")
 
-# 2. Проверка локалей (по языковым папкам)
+for path in prototypes_files:
+    with open(path, encoding="utf-8") as f:
+        try:
+            data = yaml.safe_load(f)
+            if not isinstance(data, dict): continue
+            for item in data.get("prototypes", []):
+                id_ = item.get("id")
+                if id_:
+                    all_ids[id_].append(path)
+            f.seek(0)
+            content = f.read()
+            found_ids = re.findall(r'id:\s*([a-zA-Z0-9_-]+)', content)
+            used_ids.update(found_ids)
+        except Exception as e:
+            print(f"Failed to parse {path}: {e}")
+
+# --------- Сканирование всех Locale ----------
+
+locale_ftl_files = []
+for root, dirs, files in os.walk(REPO_ROOT):
+    for d in dirs:
+        if d.lower() == "locale":
+            locale_dir = os.path.join(root, d)
+            for lrow, _, lf in os.walk(locale_dir):
+                for ftlfile in lf:
+                    if ftlfile.endswith(".ftl"):
+                        locale_ftl_files.append(os.path.join(lrow, ftlfile))
+
+# Определяем язык по имени папки сразу под Locale:
+def get_lang(path):
+    parts = path.replace("\\", "/").split("/")
+    if "Locale" in parts:
+        idx = parts.index("Locale")
+        if idx + 1 < len(parts):
+            return parts[idx + 1]
+    return "unknown"
+
 locale_ids_by_lang = defaultdict(lambda: defaultdict(list))
-if os.path.isdir(LOCALE_DIR):
-    for lang in os.listdir(LOCALE_DIR):
-        lang_dir = os.path.join(LOCALE_DIR, lang)
-        if not os.path.isdir(lang_dir): continue
-        for root, _, files in os.walk(lang_dir):
-            for file in files:
-                if file.endswith(".ftl"):
-                    path = os.path.join(root, file)
-                    with open(path, encoding="utf-8") as f:
-                        for line_no, line in enumerate(f, start=1):
-                            match = re.match(r'([a-zA-Z0-9_-]+)\s*=', line)
-                            if match:
-                                lid = match.group(1)
-                                locale_ids_by_lang[lang][lid].append(f"{path}:{line_no}")
+for path in locale_ftl_files:
+    lang = get_lang(path)
+    with open(path, encoding="utf-8") as f:
+        for line_no, line in enumerate(f, start=1):
+            match = re.match(r'([a-zA-Z0-9_-]+)\s*=', line)
+            if match:
+                lid = match.group(1)
+                locale_ids_by_lang[lang][lid].append(f"{path}:{line_no}")
 
-# 3. Сбор ошибок с нормальным выводом
+# --------- Проверки ----------
+
 errors = []
 
-# --- Дубликаты прототипов ---
+# Дубликаты прототипов
 for id_, paths in all_ids.items():
     if len(paths) > 1:
         errors.append({
@@ -73,7 +81,7 @@ for id_, paths in all_ids.items():
             "paths": paths
         })
 
-# --- ID без определения ---
+# ID без определения
 for id_ in used_ids:
     if id_ not in all_ids:
         errors.append({
@@ -83,7 +91,7 @@ for id_ in used_ids:
             "paths": []
         })
 
-# --- Дубликаты локалей только внутри одной языковой папки! ---
+# Дубликаты локалей внутри каждого языка
 for lang, locale_ids in locale_ids_by_lang.items():
     for lid, paths in locale_ids.items():
         if len(paths) > 1:
@@ -94,7 +102,7 @@ for lang, locale_ids in locale_ids_by_lang.items():
                 "paths": paths
             })
 
-# --- Отсутствие локалей для существующих ID (берём только по какой-нибудь из папок, например, en-US) ---
+# Нет локализации для существующих ID (только по en-US, иначе слишком много)
 main_lang = "en-US" if "en-US" in locale_ids_by_lang else next(iter(locale_ids_by_lang), None)
 if main_lang:
     locale_ids_mainlang = locale_ids_by_lang[main_lang]
@@ -107,12 +115,13 @@ if main_lang:
                 "paths": []
             })
 
-# --- Красивый финальный вывод ---
+# --------- Финальный красивый вывод ---------
+
 print("\n====== ИТОГ ВАЛИДАЦИИ ======\n")
 if not errors:
     print("✔️ Всё отлично! Ошибок не найдено.\n")
 else:
-    # Группируем по типу ошибки и нумеруем внутри
+    # Группируем и нумеруем удобно
     grouped = defaultdict(list)
     for err in errors:
         grouped[err['type']].append(err)
