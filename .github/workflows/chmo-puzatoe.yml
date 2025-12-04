@@ -27,4 +27,4 @@ jobs:
           pip install pyyaml
 
       - name: Run validation script
-        run: python scripts/validate.py
+        run: python Scripts/scripts/validate.py
