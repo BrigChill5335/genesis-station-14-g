@@ -3,10 +3,15 @@ import re
 import yaml
 from collections import defaultdict
 
-PROTOTYPES_DIR = "Resources/Prototypes"
-LOCALE_DIR = "Resources/Locale"
+# Абсолютные пути к папкам относительно скрипта
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+PROTOTYPES_DIR = os.path.join(SCRIPT_DIR, '..', '..', 'Resources', 'Prototypes')
+LOCALE_DIR = os.path.join(SCRIPT_DIR, '..', '..', 'Resources', 'Locale')
 
 print("Current working directory:", os.getcwd())
+print("Script DIR:", SCRIPT_DIR)
+print("Prototypes DIR:", PROTOTYPES_DIR)
+print("Locale DIR:", LOCALE_DIR)
 if not os.path.isdir(PROTOTYPES_DIR):
     print(f"Warning: No '{PROTOTYPES_DIR}' directory found!")
 else:
