@@ -3,84 +3,83 @@ import re
 import yaml
 from collections import defaultdict
 
-# Настройки путей
 PROTOTYPES_DIR = "Prototypes"
 LOCALE_DIR = "Locale"
 
-# --- 1. Проверка ID ---
+print("Current working directory:", os.getcwd())
+if not os.path.isdir(PROTOTYPES_DIR):
+    print(f"Warning: No '{PROTOTYPES_DIR}' directory found!")
+else:
+    print(f"'{PROTOTYPES_DIR}' folder contents: {os.listdir(PROTOTYPES_DIR)}")
+if not os.path.isdir(LOCALE_DIR):
+    print(f"Warning: No '{LOCALE_DIR}' directory found!")
+else:
+    print(f"'{LOCALE_DIR}' folder contents: {os.listdir(LOCALE_DIR)}")
+
+# 1. Проверка ID
 all_ids = defaultdict(list)
 used_ids = set()
-
+print("Scanning Prototypes...")
 for root, _, files in os.walk(PROTOTYPES_DIR):
     for file in files:
         if file.endswith(".yml"):
             path = os.path.join(root, file)
+            print(f"  Found prototype file: {path}")
             with open(path, encoding="utf-8") as f:
                 try:
                     data = yaml.safe_load(f)
+                    if not isinstance(data, dict):
+                        print(f"    Warning: {path} is not a dict, got {type(data)}")
+                        continue
                     for item in data.get("prototypes", []):
                         id_ = item.get("id")
                         if id_:
                             all_ids[id_].append(path)
-                    # Найти все упоминания ID в файле (для проверки ссылок)
+                    f.seek(0)
                     content = f.read()
-                    found_ids = re.findall(r'\b([a-z0-9-]+)\b', content)
+                    # Более узкая регулярка поиска id
+                    found_ids = re.findall(r'id:\s*([a-zA-Z0-9_-]+)', content)
                     used_ids.update(found_ids)
                 except Exception as e:
                     print(f"Failed to parse {path}: {e}")
 
-# --- 2. Проверка дубликатов ID ---
 errors = []
 
 for id_, paths in all_ids.items():
     if len(paths) > 1:
-        errors.append({
-            "type": "duplicate id",
-            "id": id_,
-            "paths": paths
-        })
+        errors.append({"type": "duplicate id", "id": id_, "paths": paths})
 
-# --- 3. Проверка отсутствующих ID (упоминаются, но нет определения) ---
 for id_ in used_ids:
     if id_ not in all_ids:
-        errors.append({
-            "type": "no id",
-            "id": id_,
-            "paths": []  # тут можно добавить файл, где упоминался
-        })
+        errors.append({"type": "no id", "id": id_, "paths": []})
 
-# --- 4. Проверка локалей ---
+# 4. Проверка локалей
 locale_ids = defaultdict(list)
+print("Scanning Locale...")
 for root, _, files in os.walk(LOCALE_DIR):
     for file in files:
         if file.endswith(".ftl"):
             path = os.path.join(root, file)
+            print(f"  Found locale file: {path}")
             with open(path, encoding="utf-8") as f:
                 for line_no, line in enumerate(f, start=1):
-                    match = re.match(r'([a-z0-9-]+)\s*=', line)
+                    match = re.match(r'([a-zA-Z0-9_-]+)\s*=', line)
                     if match:
                         lid = match.group(1)
                         locale_ids[lid].append(f"{path}:{line_no}")
 
-# --- 5. Дубликаты локалей ---
 for lid, paths in locale_ids.items():
     if len(paths) > 1:
-        errors.append({
-            "type": "duplicate locale",
-            "id": lid,
-            "paths": paths
-        })
+        errors.append({"type": "duplicate locale", "id": lid, "paths": paths})
 
-# --- 6. Отсутствующие локали для определенных ID ---
 for id_ in all_ids:
     if id_ not in locale_ids:
-        errors.append({
-            "type": "invalid locale",
-            "id": id_,
-            "paths": []
-        })
+        errors.append({"type": "invalid locale", "id": id_, "paths": []})
 
-# --- 7. Итоговый вывод ---
+print(f"Total prototype IDs: {len(all_ids)}")
+print(f"Total used IDs found: {len(used_ids)}")
+print(f"Total locale IDs: {len(locale_ids)}")
+
 if errors:
     print("=== Validation Errors ===")
     for e in errors:
